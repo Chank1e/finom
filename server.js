@@ -22,12 +22,16 @@ const db = {min:low(adapter_min),max:low(adapter_max)};
 
 
 app.get('/api',function(req,res){
+    const items_per_page = 10;
+          page = req.query.page||1,
+          offset = (page-1)*items_per_page;
     let $db = (req.query.db==0||!req.query.db)?db.min:db.max;
-    let _id = +req.query.id;
-    let result = $db.get('users').find({id:_id}).value();
+    let result = $db.get('users').value();
+    let sended_obj = {pages:Math.ceil(result.length/items_per_page),
+                      users:result.slice(offset,offset+items_per_page)}
     if(result){
-        res.json(result);
+        res.json(sended_obj);
     } else {
         res.status(204).send('No content!')
     }
-})
+});

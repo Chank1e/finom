@@ -22,7 +22,7 @@ const db = {min:low(adapter_min),max:low(adapter_max)};
 
 
 app.get('/api',function(req,res){
-    let $db = (req.query.db==0)?db.min:db.max;
+    let $db = (req.query.db==0||!req.query.db)?db.min:db.max;
     let _id = +req.query.id;
     let result = $db.get('users').find({id:_id}).value();
     if(result){

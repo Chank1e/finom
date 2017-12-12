@@ -1,5 +1,14 @@
 <template>
-  <div id="app">
+  <div id="app" class="ui container">
+<form>
+  <p>Choose data:
+    <input type="radio" value="0">
+    <label>32 rows</label>
+    <input type="radio" value="1">
+    <label>1000 rows</label>
+    <button type="submit">update</button>
+  </p>
+</form>
     <table class="ui celled table">
       <thead>
         <tr>
@@ -48,6 +57,10 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  created(){
+    this.axios.get('/api',{params:{id:257}})
+    .then(res=>console.log(res))
   }
 }
 </script>

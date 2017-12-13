@@ -7,12 +7,17 @@
 ``` bash
 # install dependencies
 npm install
+# or with yarn
+yarn install
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
+# build production 
 npm run build
+# or with yarn
+yarn run build
+
+# start api server
+node server
+
 ```
 
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).

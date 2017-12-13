@@ -18,11 +18,11 @@ app.listen(8080, function () {
   console.log("Listening on 8080");
 });
 
-const low = require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
 
-const adapter_min = new FileSync('db/min.json')
-const adapter_max = new FileSync('db/max.json')
+const adapter_min = new FileSync('db/min.json');
+const adapter_max = new FileSync('db/max.json');
 //inicialize db const with 2 db's
 const db = {
   min: low(adapter_min),
@@ -32,10 +32,10 @@ const db = {
 
 app.get('/api', function (req, res) {
   const $query = req.query,
-    items_per_page = +$query.items || 10
+    items_per_page = +$query.items || 10;
 
   //get user's query db, if doesn't set=> set to minimal
-  let $db = ($query.db == 0 || !$query.db) ? db.min : db.max
+  let $db = ($query.db == 0 || !$query.db) ? db.min : db.max;
 
 
   let result_starred = $db.get('users').filter({
@@ -43,17 +43,17 @@ app.get('/api', function (req, res) {
     }).value(), //GET all starred rows(do not use search function on them)
     result_unsturred = $db.get('users').filter(i => {
       return i.starred == "false" || !i.starred
-    }).value() //GET all unstarred rows
+    }).value(); //GET all unstarred rows
 
   //if search query is defined
   if ($query.search) {
     result_unsturred = result_unsturred.filter(i => {
-      let str = i.firstName + i.lastName
-      return str.toLowerCase().includes($query.search.toLowerCase())
+      let str = i.firstName + i.lastName;
+      return str.toLowerCase().includes($query.search.toLowerCase());
     })
   }
   //concat starred and unstarred arrays in result array to sort/send to client
-  let result = result_starred.concat(result_unsturred)
+  let result = result_starred.concat(result_unsturred);
 
   //if we have sorting in query we just sort resulted array with Array.prototype.sort()
   if ($query.sort_type !== '' && $query.sort_name !== '') {
@@ -83,7 +83,7 @@ app.get('/api', function (req, res) {
   let pages = Math.ceil(result.length / items_per_page),
     page = ($query.page <= pages) ? $query.page : 1, //if query page is more than pages=>set page to 1
     offset = (page - 1) * items_per_page,
-    users = result.slice(offset, offset + items_per_page)
+    users = result.slice(offset, offset + items_per_page);
 
   let sended_obj = {
     pages,
@@ -92,14 +92,14 @@ app.get('/api', function (req, res) {
   }
 
   if (result) {
-    res.json(sended_obj)
+    res.json(sended_obj);
   } else {
-    res.status(204).send('No content!')
+    res.status(204).send('No content!');
   }
 });
 app.post('/api/star', function (res, req) {
   const $body = req.req.body,
-    $db = ($body.db == 0) ? db.min : db.max
+    $db = ($body.db == 0) ? db.min : db.max;
   //find row in DB with by phone and id and set starred parametr
   $db.get('users')
     .find({
@@ -109,6 +109,6 @@ app.post('/api/star', function (res, req) {
     .assign({
       starred: $body.val
     })
-    .write()
-    res.res.status(201).send('created')
+    .write();
+    res.res.status(201).send('created');
 })

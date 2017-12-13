@@ -31,10 +31,10 @@
         </div> 
       </div>
     </div>
-    <table class="ui celled table blue sortable">
+    <table class="ui celled table sortable definition">
       <thead>
         <tr>
-          <th>Starred</th>
+          <th></th>
           <th @click="setSort('id')" :class="(sort.name=='id')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">id</th>
           <th @click="setSort('firstName')" :class="(sort.name=='firstName')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">firstName</th>
           <th @click="setSort('lastName')" :class="(sort.name=='lastName')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">lastName</th>
@@ -117,15 +117,15 @@ export default {
     }
   },
   mounted() {
-    this.getData(this.current_page)
+    this.getData(this.current_page);
   },
   methods: {
     setSort(name) {
       if (!this.sort.type) {
-        this.sort.type = 'asc'
+        this.sort.type = 'asc';
       } else {
         if (this.sort.name != name) {
-          this.sort.type = 'asc'
+          this.sort.type = 'asc';
         } else {
           this.sort.type = (this.sort.type == 'desc') ? 'asc' : 'desc';
         }
@@ -135,7 +135,7 @@ export default {
       this.getData(1);
     },
     getData(page = 1) {
-      this.changePage(page)
+      this.changePage(page);
       this.loading = true;
       //console.time('request time:')
       this.axios.get('/api', {
@@ -156,22 +156,19 @@ export default {
         });
     },
     changePage(page) {
-      this.removeSelectedRow();
+      this.removeSelectedRows();
       this.current_page = page;
       this.$refs.paginated.selected = this.current_page - 1;
     },
     selectRow(item) {
-      this.removeSelectedRow();
+      this.removeSelectedRows();
       document.querySelector(`tr[data-key="${item.id}"][data-phone="${item.phone}"]`).classList.add('selected');
       this.current_item = item;
     },
     setStarred(item) {
-      console.log(item)
       if (!item.starred || item.starred == false || item.starred == "false") {
-        console.log('1')
         item.starred = true;
       } else if (item.starred == true || item.starred == "true") {
-        console.log('2')
         item.starred = false;
       }
       this.$forceUpdate();
@@ -180,14 +177,13 @@ export default {
         phone: item.phone,
         db: this.db_type,
         val: item.starred
-      }))
+      }));
     },
-    removeSelectedRow(){
-      document.querySelectorAll('tr[data-key]').forEach(i => i.classList.remove('selected'))
+    removeSelectedRows() {
+      document.querySelectorAll('tr[data-key]').forEach(i => i.classList.remove('selected'));
     }
   }
 }
-
 </script>
 <style lang="scss">
 tr {

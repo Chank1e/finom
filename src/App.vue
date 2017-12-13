@@ -90,6 +90,9 @@
         </div>
       </div>
     </div>
+    <div class="ui segment">
+      <h4 class="ui right aligned header">created by <i>@Chank1e</i>, 2017. <u>for Finom</u></h4>
+    </div>
   </div>
 </template>
 

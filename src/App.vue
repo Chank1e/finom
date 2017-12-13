@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="ui container">
-    <div class="ui form">
+    <div class="ui form message">
       <div class="inline fields">
         <label>DB:</label>
         <div class="field">
@@ -15,10 +15,12 @@
             <label>full</label>
           </div>
         </div>
-        <div class="ui submit button" @click="getData(1)">Select</div>
+        <div class="ui button primary" 
+             @click="getData(1)">Select</div>
         <label>Items per page:</label>
         <div class="field">
-          <select v-model="items" @change="getData(1)" class="ui dropdown">
+          <select v-model="items" 
+                  @change="getData(1)" class="ui dropdown">
             <option value="10">10</option>
             <option value="25">25</option>
             <option value="50">50</option>
@@ -27,19 +29,37 @@
         </div>
         <label>Search:</label>
         <div class="field">
-          <input type="text" placeholder="Search" v-model="search" @change="getData(1)">
+          <input type="text" placeholder="Search" v-model="search" 
+                 @change="getData(1)">
         </div> 
       </div>
     </div>
-    <table class="ui celled table sortable definition">
+    <table class="ui celled table sortable blue">
       <thead>
         <tr>
-          <th></th>
-          <th @click="setSort('id')" :class="(sort.name=='id')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">id</th>
-          <th @click="setSort('firstName')" :class="(sort.name=='firstName')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">firstName</th>
-          <th @click="setSort('lastName')" :class="(sort.name=='lastName')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">lastName</th>
-          <th @click="setSort('email')" :class="(sort.name=='email')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">email</th>
-          <th @click="setSort('phone')" :class="(sort.name=='phone')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">phone</th>
+          <th>
+            <i class="icon star"></i>
+          </th>
+          <th @click="setSort('id')" 
+              :class="(sort.name=='id')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">
+            id
+          </th>
+          <th @click="setSort('firstName')" 
+              :class="(sort.name=='firstName')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">
+            firstName
+          </th>
+          <th @click="setSort('lastName')" 
+              :class="(sort.name=='lastName')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">
+            lastName
+          </th>
+          <th @click="setSort('email')" 
+              :class="(sort.name=='email')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">
+            email
+          </th>
+          <th @click="setSort('phone')" 
+              :class="(sort.name=='phone')?(sort.type=='asc')?'sorted ascending':'sorted descending':''">
+            phone
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -48,9 +68,15 @@
             <div class="ui active centered inline loader"></div>
         </tr>
         </th>
-        <tr v-for="item in data" :data-key="item.id" :data-phone="item.phone" @click="selectRow(item)" v-bind:key="item.id">
+        <tr v-for="item in data" 
+            :data-key="item.id" 
+            :data-phone="item.phone" 
+            @click="selectRow(item)" 
+            :key="item.id">
           <td @click="setStarred(item)">
-            <i class="star icon" :class="(item.starred==true||item.starred=='true')?'':'empty'"></i>
+            <i class="star icon" 
+               :class="(item.starred==true||item.starred=='true')?'':'empty'">
+            </i>
           </td>
           <td>{{item.id}}</td>
           <td>{{item.firstName}}</td>
@@ -63,8 +89,16 @@
         <tr>
           <th colspan="6">
             <div class="ui right floated pagination menu">
-              <paginate ref="paginated" :page-count="pages" :click-handler="getData" :force-pagce="current_page" :prev-text="'Prev'" :prev-class="'item'"
-                :next-text="'Next'" :next-class="'item'" :page-link-class="'item'" :active-class="'bg'">
+              <paginate ref="paginated" 
+                        :page-count="pages" 
+                        :click-handler="getData" 
+                        :force-pagce="current_page" 
+                        :prev-text="'Prev'" 
+                        :prev-class="'item'"
+                        :next-text="'Next'" 
+                        :next-class="'item'" 
+                        :page-link-class="'item'" 
+                        :active-class="'bg'">
               </paginate>
             </div>
           </th>

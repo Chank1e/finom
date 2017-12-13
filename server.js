@@ -110,5 +110,5 @@ app.post('/api/star', function (res, req) {
       starred: $body.val
     })
     .write();
-    res.res.status(201).send('created');
+  res.res.status(201).send('created');
 })
